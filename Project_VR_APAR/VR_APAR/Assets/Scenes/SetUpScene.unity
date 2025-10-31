@@ -961,7 +961,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 533261182979560970, guid: 522c79b0fa9839748ab14cad67b93595, type: 3}
       propertyPath: TriggerModule.enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 533261182979560970, guid: 522c79b0fa9839748ab14cad67b93595, type: 3}
       propertyPath: TriggerModule.primitives.Array.size
@@ -1177,7 +1177,7 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 1.5
+  m_Height: 1.2
   m_Radius: 0.15
   m_SlopeLimit: 45
   m_StepOffset: 0.3
