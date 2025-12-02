@@ -38,14 +38,20 @@ public class FinalScripApar : XRGrabInteractable
 
     #region Private Methods
     // Start is called before the first frame update
+    [System.Obsolete]
     void Start()
     {
         MaxCapacity = capacity;
         foreach(var item in secondHandGrabPoints)
         {
-            item.onSelectEntered.AddListener(OnSecondHandGrab);
-            item.onSelectExited.AddListener(OnSecondHandRelease);
+            item.onSelectEnter.AddListener(OnSecondHandGrab);
+            item.onSelectExit.AddListener(OnSecondHandRelease);
+
+            
         }
+        XRGrabInteractable grabInteractable = GetComponent<XRGrabInteractable>();
+        grabInteractable.activated.AddListener(EnableExtinguisher);
+        grabInteractable.deactivated.AddListener(DisableExtinguisher);
 
     }
 
@@ -64,7 +70,7 @@ public class FinalScripApar : XRGrabInteractable
 
     #region Public Methods
 
-    public void EnableExtinguisher()
+    public void EnableExtinguisher(ActivateEventArgs arg)
     {
         if(capacity > 0)
         {
@@ -90,7 +96,7 @@ public class FinalScripApar : XRGrabInteractable
         }
     }
 
-    public void DisableExtinguisher()
+    public void DisableExtinguisher(DeactivateEventArgs args)
     {
         particles.Stop();
         audioSource.Stop();
@@ -106,6 +112,7 @@ public class FinalScripApar : XRGrabInteractable
         }
     }
 
+    [System.Obsolete]
     public override void ProcessInteractable(XRInteractionUpdateOrder.UpdatePhase updatePhase)
     {
         if(secondInteractor && selectingInteractor)
@@ -150,7 +157,7 @@ public class FinalScripApar : XRGrabInteractable
     public override bool IsSelectableBy(IXRSelectInteractor interactor)
     {
         bool isalreadygrabbed = selectingInteractor && !interactor.Equals(selectingInteractor);
-        return base.IsSelectableBy(interactor);
+        return base.IsSelectableBy(interactor) && !isalreadygrabbed;
     }
 
     #endregion
